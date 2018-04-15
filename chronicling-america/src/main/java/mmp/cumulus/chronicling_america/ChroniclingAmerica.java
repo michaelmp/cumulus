@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class NewspaperAPI {
+public class ChroniclingAmerica {
 
     private final WebClient client = WebClient.builder()
             .baseUrl("https://chroniclingamerica.loc.gov").build();

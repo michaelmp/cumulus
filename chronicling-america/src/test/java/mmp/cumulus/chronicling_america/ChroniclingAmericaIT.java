@@ -14,14 +14,14 @@ import reactor.core.publisher.Flux;
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         properties = "spring.main.web-application-type=reactive",
-        classes = NewspaperAPIIntegrationTest.Config.class)
-public class NewspaperAPIIntegrationTest {
+        classes = ChroniclingAmericaIT.Config.class)
+public class ChroniclingAmericaIT {
 
     @EnableAutoConfiguration
     static class Config {
     }
 
-    private static final NewspaperAPI API = new NewspaperAPI();
+    private static final ChroniclingAmerica API = new ChroniclingAmerica();
 
     @Test
     public void testIndex() {
