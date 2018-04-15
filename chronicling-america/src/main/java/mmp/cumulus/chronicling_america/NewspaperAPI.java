@@ -18,9 +18,7 @@ public class NewspaperAPI {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Index.class)
-                .flatMapIterable((result) -> {
-                    return result.getNewspapers();
-                })
+                .flatMapIterable(Index::getNewspapers)
                 .doOnError((t) -> {
                     System.err.println(t.getMessage());
                 });
