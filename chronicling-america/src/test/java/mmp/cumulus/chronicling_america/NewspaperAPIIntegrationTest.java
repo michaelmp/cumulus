@@ -23,6 +23,17 @@ public class NewspaperAPIIntegrationTest {
     private static final NewspaperAPI API = new NewspaperAPI();
 
     @Test
+    public void testIndex() {
+        final int N_PAPERS = 10;
+        List<NewspaperHeader> newspapers = API.index()
+                .take(N_PAPERS)
+                .collectList()
+                .blockOptional()
+                .orElse(Collections.emptyList());
+        assertEquals(N_PAPERS, newspapers.size());
+    }
+
+    @Test
     public void testGetNewspaper() {
         NewspaperHeader header = new NewspaperHeader();
         header.setUrl("http://chroniclingamerica.loc.gov/lccn/sn85025905.json");
@@ -32,14 +43,21 @@ public class NewspaperAPIIntegrationTest {
     }
 
     @Test
-    public void testIndex() {
-        final int N_PAPERS = 10;
-        List<NewspaperHeader> newspapers = API.index()
-                .take(N_PAPERS)
-                .collectList()
-                .blockOptional()
-                .orElse(Collections.emptyList());
-        assertEquals(N_PAPERS, newspapers.size());
+    public void testGetIssue() {
+        IssueHeader header = new IssueHeader();
+        header.setUrl("http://chroniclingamerica.loc.gov/lccn/sn85025905/1865-04-19/ed-1.json");
+        assertNotNull(API.getIssue(header).block());
+        header.setUrl("http://chroniclingamerica.loc.gov/lccn/sn85025905/1865-04-19/ed-1.json");
+        assertNotNull(API.getIssue(header).block());
+    }
+
+    @Test
+    public void testGetPage() {
+        PageHeader header = new PageHeader();
+        header.setUrl("http://chroniclingamerica.loc.gov/lccn/sn85025905/1865-04-19/ed-1/seq-1.json");
+        assertNotNull(API.getPage(header).block());
+        header.setUrl("http://chroniclingamerica.loc.gov/lccn/sn85025905/1865-04-19/ed-1/seq-1.json");
+        assertNotNull(API.getPage(header).block());
     }
 
 }

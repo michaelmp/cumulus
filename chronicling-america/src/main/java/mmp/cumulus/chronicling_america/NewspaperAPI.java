@@ -1,9 +1,5 @@
 package mmp.cumulus.chronicling_america;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -49,6 +45,10 @@ public class NewspaperAPI {
 
     public Mono<Issue> getIssue(IssueHeader header) {
         return getGeneric(Issue.class, header);
+    }
+    
+    public Mono<Page> getPage(PageHeader header) {
+        return getGeneric(Page.class, header);
     }
 
 }
