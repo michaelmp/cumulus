@@ -82,7 +82,8 @@ public class NewspaperAPIIntegrationTest {
                 })
                 .flatMap(API::getPage)
                 .collectList()
-                .block();
+                .blockOptional()
+                .orElse(Collections.emptyList());
 
         for (Page page : pages) {
             System.out.println(page.getPdf());
