@@ -1,9 +1,7 @@
 package mmp.cumulus.chronicling_america;
 
-import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
@@ -64,11 +62,12 @@ public class NewspaperAPIIntegrationTest {
     }
 
     @Test
-    public void test_first_page_of_first_issue_of_first_10_newspapers_in_oregon() {
+    public void test_first_page_of_first_issue_of_first_10_newspapers_in_oregon_that_have_pdf_and_ocr() {
         List<Page> pages = API.index()
                 .filter((header) -> {
                     return "Oregon".equals(header.getState());
-                }).flatMap(API::getNewspaper)
+                })
+                .flatMap(API::getNewspaper)
                 .sort((n1, n2) -> {
                     return n1.getStart_year().compareTo(n2.getStart_year());
                 })
@@ -81,12 +80,15 @@ public class NewspaperAPIIntegrationTest {
                     return Flux.fromIterable(issue.getPages()).take(1);
                 })
                 .flatMap(API::getPage)
+                .filter((page) -> {
+                    return page.getPdf() != null && page.getOcr() != null;
+                })
                 .collectList()
                 .blockOptional()
                 .orElse(Collections.emptyList());
 
         for (Page page : pages) {
-            System.out.println(page.getPdf());
+            System.out.println(page.getPdf() + " : " + page.getOcr());
         }
     }
 
