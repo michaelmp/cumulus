@@ -21,7 +21,6 @@ public class NewspaperAPI {
                 .flatMapIterable((result) -> {
                     return result.getNewspapers();
                 })
-                .cache()
                 .doOnError((t) -> {
                     System.err.println(t.getMessage());
                 });
